@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+    <style>
+            body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4; /* Set desired background color */
+    }
+
+
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 0 20px;
+        background-color: #fff; /* Set desired background color */
+        border-radius: 10px; /* Optional: add some border radius for a rounded look */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: add a box shadow for depth */
+    }
+
+
+    h1 {
+        text-align: center;
+        color: #333; /* Set desired font color */
+    }
+
+
+    #taskInput {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc; /* Optional: add a border for input */
+        border-radius: 5px; /* Optional: add some border radius for a rounded look */
+    }
+
+
+    button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px; /* Optional: add some border radius for a rounded look */
+    }
+
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+
+    .task-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+    }
+
+
+    .completed .task-text {
+        text-decoration: line-through;
+        color: #888;
+    }
+
+
+    .delete-button {
+        margin-left: auto;
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        border-radius: 50%; /* Optional: make the delete button round */
+    }
+
+
+    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+</head>
+<body>
+    <div class="container">
+        <h1>Task List</h1>
+        <input type="text" id="taskInput" placeholder="Create a new task">
+        <button onclick="addTask()">Add Task</button>
+
+
+        <ul id="taskList">
+            <!-- Tasks will be added here -->
+        </ul>
+    </div>
+
+
+    <script>
+        function addTask() {
+            var taskInput = document.getElementById('taskInput');
+            var taskText = taskInput.value.trim();
+            if (taskText === '') {
+                alert('Please enter a task.');
+                return;
+            }
+
+
+            var taskList = document.getElementById('taskList');
+            var taskItem = document.createElement('li');
+            taskItem.className = 'task-item';
+            var checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.addEventListener('change', function() {
+                taskItem.classList.toggle('completed', this.checked);
+            });
+            var taskTextElement = document.createElement('span');
+            taskTextElement.className = 'task-text';
+            taskTextElement.textContent = taskText;
+            taskItem.appendChild(checkbox);
+            taskItem.appendChild(taskTextElement);
+
+
+            var deleteButton = document.createElement('button');
+            deleteButton.className = 'delete-button';
+            deleteButton.innerText = 'x';
+            deleteButton.onclick = function(e) {
+                e.stopPropagation();
+                taskList.removeChild(taskItem);
+            };
+            taskItem.appendChild(deleteButton);
+
+
+            taskList.appendChild(taskItem);
+
+
+            taskInput.value = '';
+        }
+    </script>
+</body>
+</html>
